@@ -1,24 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+//use toastify to display cool popup msgs, usage: --> toast.success("myMsg");
+import "./App.css";
+import IncomeForm from "./components/IncomeForm";
+import Expense from "./components/Expense";
+import Target from "./components/Target";
+import Transfer from "./components/Transfer";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <IncomeForm />
+      <Expense />
+      <Target />
+      <Transfer />
+      <ToastContainer />
     </div>
   );
 }

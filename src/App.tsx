@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,12 +10,32 @@ import Target from "./components/Target";
 import Transfer from "./components/Transfer";
 
 function App() {
+  const [savingAmount, setSavingAmount] = useState(0);
+  const [totalIncomeAmout, setTotalIncomeAmount] = useState(0);
+  const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
+
+  const getSavingAmount = (amount: number) => {
+    console.log(amount);
+    setSavingAmount(amount);
+  };
+
+  // const[transferAmount, setTransferAmount] = useState(0);
+const getTotalIncomeAmount = (amount:number) => {
+  setTotalIncomeAmount(amount);
+
+}
+const getTotalExpenseAmount = (amount:number) => {
+  setTotalExpenseAmount(amount);
+
+}
+
+
   return (
     <div className="container">
-      <IncomeForm />
-      <Expense />
-      <Target />
-      <Transfer />
+      <IncomeForm onGetTotalIncomeAmount={getTotalIncomeAmount} />
+      <Expense onGetTotalExpenseAmount={getTotalExpenseAmount} />
+      <Target savingAmount={savingAmount}/>
+      <Transfer onGetSavingAmount={getSavingAmount} totalIncomeAmout={totalIncomeAmout} totalExpenseAmount={totalExpenseAmount} />
       <ToastContainer />
     </div>
   );

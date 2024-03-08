@@ -104,7 +104,7 @@ export const Expense = (props: totalExpenseAmountProps ) =>{
         {expenses.map((expense) => {
           return (
             <li>
-             Water Biill {expense.source}: {expense.amount} EUR, on {expense.date}{" "}
+            {expense.source}: {expense.amount} EUR, on {expense.date}{" "}
             </li>
           );
         })}

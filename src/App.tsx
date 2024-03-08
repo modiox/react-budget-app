@@ -20,22 +20,26 @@ function App() {
   };
 
   // const[transferAmount, setTransferAmount] = useState(0);
-const getTotalIncomeAmount = (amount:number) => {
-  setTotalIncomeAmount(amount);
-
-}
-const getTotalExpenseAmount = (amount:number) => {
-  setTotalExpenseAmount(amount);
-
-}
-
+  const getTotalIncomeAmount = (amount: number) => {
+    setTotalIncomeAmount(amount);
+  };
+  const getTotalExpenseAmount = (amount: number) => {
+    setTotalExpenseAmount(amount);
+  };
 
   return (
     <div className="container">
-      <IncomeForm onGetTotalIncomeAmount={getTotalIncomeAmount} />
-      <Expense onGetTotalExpenseAmount={getTotalExpenseAmount} />
-      <Target savingAmount={savingAmount}/>
-      <Transfer onGetSavingAmount={getSavingAmount} totalIncomeAmout={totalIncomeAmout} totalExpenseAmount={totalExpenseAmount} />
+      <h1> Budget App </h1>
+      <p className="style">
+        <IncomeForm onGetTotalIncomeAmount={getTotalIncomeAmount} />
+      </p>
+     <p className="style"> <Expense onGetTotalExpenseAmount={getTotalExpenseAmount} /></p> 
+     <p className="style"><Target savingAmount={savingAmount} /> </p> 
+     <p className="style"> <Transfer
+        onGetSavingAmount={getSavingAmount}
+        totalIncomeAmout={totalIncomeAmout}
+        totalExpenseAmount={totalExpenseAmount}
+      /></p> 
       <ToastContainer />
     </div>
   );

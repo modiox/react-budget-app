@@ -40,7 +40,9 @@ export const IncomeForm = (props: {
       };
       console.log(income);
       setIncomes((prevIcomes) => {
+        toast.success("New Expense Added");
         return [...prevIcomes, income];
+       
       }); //use spread operator to spread the array items
 
       // Reset form fields after submission

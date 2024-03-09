@@ -1,13 +1,15 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { v4 as uuidv4 } from "uuid";
+
 type expenseType = {
   id: string,
   source: string;
   amount: number;
   date: string;
 };
+
 type totalExpenseAmountProps = {
   onGetTotalExpenseAmount: (amount: number) => void;
 };
@@ -17,6 +19,12 @@ export const Expense = (props: totalExpenseAmountProps) => {
   const [amount, setAmount] = useState(0);
   const [date, setDate] = useState("");
   const [expenses, setExpense] = useState<expenseType[]>([]);
+
+    // Update total expense amount whenever expenses array changes
+    useEffect(() => {
+      const totalAmount = expenses.reduce((total, currentValue) => total + currentValue.amount, 0);
+      props.onGetTotalExpenseAmount(totalAmount);
+    }, [expenses, props]);
 
   const totalAmount = expenses.reduce(
     (total, currentValue) => total + currentValue.amount,
@@ -33,12 +41,10 @@ export const Expense = (props: totalExpenseAmountProps) => {
   const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     setDate(e.target.value);
   };
-  const handleDelete = (index: number) => {
-    // Create a copy of the expenses array
-    const updatedExpenses = [...expenses];
-    // Remove the expense item at the specified index
-    updatedExpenses.splice(index, 1);
-    // Update the state with the modified expenses array
+  const handleDelete = (id: string) => {
+    // Filter out the expense item with the specified id
+    const updatedExpenses = expenses.filter(expense => expense.id !== id);
+    // Update the state with the filtered expenses array
     setExpense(updatedExpenses);
   };
 
@@ -110,7 +116,7 @@ export const Expense = (props: totalExpenseAmountProps) => {
   {expenses.map((expense) => (
     <li key={expense.id}>
       {expense.source}: {expense.amount} EUR, on {expense.date}{" "}
-      <button onClick={() => handleDelete(parseInt(expense.id))}> Delete </button>
+      <button onClick={() => handleDelete(expense.id)}> Delete </button>
     </li>
   ))}
 </ul>

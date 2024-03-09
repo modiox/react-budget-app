@@ -1,10 +1,9 @@
-import React, { ChangeEvent, FormEvent, useState } from "react"; //importing the use state to handle the component's data
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react"; //importing the use state to handle the component's data
 import { toast } from "react-toastify";
-import styles from "./IncomeForm.module.css";
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 type incomeType = {
-  // id?: string,
+  id: string,
   source: string;
   amount: number;
   date: string;
@@ -23,15 +22,18 @@ export const IncomeForm = (props: {
     (total, currentValue) => total + currentValue.amount,
     0
   );
+  // useEffect
+  useEffect(() => {
+    props.onGetTotalIncomeAmount(totalAmount);
+  }, [incomeAmount, totalAmount, props]);
 
   props.onGetTotalIncomeAmount(totalAmount);
 
   const handleIncomeSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if(incomeSource && incomeAmount &&  incomeDate) { 
-
+    if (incomeSource && incomeAmount && incomeDate) {
       const income = {
-        // id: uuidv4(),
+        id: uuidv4(),
         source: incomeSource,
         amount: incomeAmount,
         date: incomeDate,
@@ -40,18 +42,12 @@ export const IncomeForm = (props: {
       setIncomes((prevIcomes) => {
         return [...prevIcomes, income];
       }); //use spread operator to spread the array items
-  
-     
-  
+
       // Reset form fields after submission
       setIncomeSource("");
       setIncomeAmount(0);
       setDate("");
-  
-      
     }
-  
-    
   };
 
   const handleSourceChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +60,10 @@ export const IncomeForm = (props: {
 
   const handleDate = (event: ChangeEvent<HTMLInputElement>) => {
     setDate(event.target.value);
+  };
+  const handleDelete = (id: string) => {
+    const updatedIncomes = incomes.filter((income) => income.id !== id);
+    setIncomes(updatedIncomes);
   };
 
   return (
@@ -109,8 +109,9 @@ export const IncomeForm = (props: {
       {incomes.length ? (
         <ul>
           {incomes.map((income) => (
-            <li>
+            <li key={income.id}>
               {income.source}: {income.amount} EUR on {income.date}
+              <button onClick={() => handleDelete(income.id)}> Delete </button>
             </li>
           ))}
         </ul>

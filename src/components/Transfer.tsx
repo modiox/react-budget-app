@@ -1,19 +1,16 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
 type TransferForSavingProps = {
-    onGetSavingAmount: (amount: number) => void;
-    totalIncomeAmout: number;
-    totalExpenseAmount: number;
+  onGetSavingAmount: (amount: number) => void;
+  totalIncomeAmout: number;
+  totalExpenseAmount: number;
 };
 
-
-export const Transfer = (props: TransferForSavingProps ) => {
-
-  const [amount, setAmount] = useState(0); 
+export const Transfer = (props: TransferForSavingProps) => {
+  const [amount, setAmount] = useState(0);
 
   const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
     setAmount(Number(event.target.value));
-
   };
 
   const handleSumbit = (e: FormEvent) => {
@@ -21,12 +18,16 @@ export const Transfer = (props: TransferForSavingProps ) => {
     console.log();
     props.onGetSavingAmount(amount);
   };
+ 
 
   return (
     <div>
       <form onSubmit={handleSumbit}>
         <div className="form-field">
-          <h2> Current Balance: {props.totalIncomeAmout - props.totalExpenseAmount}</h2>
+          <h2>
+            {" "}
+            Current Balance: {props.totalIncomeAmout - props.totalExpenseAmount}
+          </h2>
           <label htmlFor="source"> Transfer To Saving Account</label>
           <input
             type="text"
@@ -44,6 +45,5 @@ export const Transfer = (props: TransferForSavingProps ) => {
 
 export default Transfer;
 function onGetSavingAmount(amount: number) {
-    throw new Error("Function not implemented.");
+  throw new Error("Function not implemented.");
 }
-

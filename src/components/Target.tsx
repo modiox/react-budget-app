@@ -33,7 +33,7 @@ export const Target = (props: { savingAmount: number }) => {
 
   return (
     <div>
-      <form action="">
+      <form onSubmit={handleAddIncome}>
         <div className="form-field">
           <label htmlFor="source"> Set Target </label>
           <input
@@ -47,22 +47,21 @@ export const Target = (props: { savingAmount: number }) => {
           <button> Add Income </button>
         </div>
       </form>
-      <p> Current Saving: 0 </p>
+      <p> Current Saving:  ${totalSaving} </p>
       <p> Target: {props.savingAmount}</p>
+     
       <p>
         {" "}
         <progress max={5000} value={1000}>
           {" "}
         </progress>
       </p>
-
-      <p> Current Saving: ${totalSaving} </p>
-      <p> Target: ${props.savingAmount}</p>
       <p> Percentage of Target: {percentage}% </p>
       <ul>
         {sources.map((source, index) => (
           <li key={index}>
             {source.type === "income" ? "Income" : "Expense"}: ${source.amount}
+           {/* //delete button to remove the set target */}
             <button onClick={() => handleDelete(index)}> Delete</button>
           </li>
         ))}

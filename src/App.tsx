@@ -10,10 +10,12 @@ import Target from "./components/Target";
 import Transfer from "./components/Transfer";
 
 function App() {
+  //use states to render the components
   const [savingAmount, setSavingAmount] = useState(0);
   const [totalIncomeAmout, setTotalIncomeAmount] = useState(0);
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
 
+  //functions to each components
   const getSavingAmount = (amount: number) => {
     console.log(amount);
     setSavingAmount(amount);
@@ -29,17 +31,25 @@ function App() {
 
   return (
     <div className="container">
-      <h1> Budget App </h1>
+      <h1> Moe's Budget App </h1>
       <p className="style">
         <IncomeForm onGetTotalIncomeAmount={getTotalIncomeAmount} />
       </p>
-     <p className="style"> <Expense onGetTotalExpenseAmount={getTotalExpenseAmount} /></p> 
-     <p className="style"><Target savingAmount={savingAmount} /> </p> 
-     <p className="style"> <Transfer
-        onGetSavingAmount={getSavingAmount}
-        totalIncomeAmout={totalIncomeAmout}
-        totalExpenseAmount={totalExpenseAmount}
-      /></p> 
+      <p className="style">
+        {" "}
+        <Expense onGetTotalExpenseAmount={getTotalExpenseAmount} />
+      </p>
+      <p className="style">
+        <Target savingAmount={savingAmount} />{" "}
+      </p>
+      <p className="style">
+        {" "}
+        <Transfer
+          onGetSavingAmount={getSavingAmount}
+          totalIncomeAmout={totalIncomeAmout}
+          totalExpenseAmount={totalExpenseAmount}
+        />
+      </p>
       <ToastContainer />
     </div>
   );

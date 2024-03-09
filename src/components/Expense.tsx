@@ -7,13 +7,11 @@ type expenseType = {
   amount: number;
   date: string;
 };
- type totalExpenseAmountProps =  {
+type totalExpenseAmountProps = {
+  onGetTotalExpenseAmount: (amount: number) => void;
+};
 
-    onGetTotalExpenseAmount: (amount:number) => void;
- }
-
-
-export const Expense = (props: totalExpenseAmountProps ) =>{
+export const Expense = (props: totalExpenseAmountProps) => {
   const [source, setSource] = useState("");
   const [amount, setAmount] = useState(0);
   const [date, setDate] = useState("");
@@ -25,7 +23,6 @@ export const Expense = (props: totalExpenseAmountProps ) =>{
   );
   props.onGetTotalExpenseAmount(amount);
 
-
   const handleExpenseChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSource(e.target.value);
   };
@@ -34,6 +31,14 @@ export const Expense = (props: totalExpenseAmountProps ) =>{
   };
   const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     setDate(e.target.value);
+  };
+  const handleDelete = (index: number) => {
+    // Create a copy of the expenses array
+    const updatedExpenses = [...expenses];
+    // Remove the expense item at the specified index
+    updatedExpenses.splice(index, 1);
+    // Update the state with the modified expenses array
+    setExpense(updatedExpenses);
   };
 
   const handleSubmit = (event: FormEvent) => {
@@ -98,13 +103,14 @@ export const Expense = (props: totalExpenseAmountProps ) =>{
           ></input>
         </div>
         <button> Add Expense </button>
+        <button onClick={() => handleDelete}> Delete </button>
       </form>
       <ul>
         {" "}
         {expenses.map((expense) => {
           return (
             <li>
-            {expense.source}: {expense.amount} EUR, on {expense.date}{" "}
+              {expense.source}: {expense.amount} EUR, on {expense.date}{" "}
             </li>
           );
         })}

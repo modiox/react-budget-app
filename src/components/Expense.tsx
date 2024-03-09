@@ -1,8 +1,9 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { v4 as uuidv4 } from "uuid";
 type expenseType = {
-  //id: string,
+  id: string,
   source: string;
   amount: number;
   date: string;
@@ -51,13 +52,14 @@ export const Expense = (props: totalExpenseAmountProps) => {
 
     if (source && amount && date) {
       const expense = {
-        //id: uuid4(),
+        id: uuidv4(),
         source: source,
         amount: amount,
         date: date,
       };
       setExpense((prevExpense) => [...prevExpense, expense]);
       toast.success("New Expense Added");
+      props.onGetTotalExpenseAmount(totalAmount);
     } else toast.error("Date is missing");
 
     // Reset form fields after submission
@@ -103,18 +105,15 @@ export const Expense = (props: totalExpenseAmountProps) => {
           ></input>
         </div>
         <button> Add Expense </button>
-        <button onClick={() => handleDelete}> Delete </button>
       </form>
       <ul>
-        {" "}
-        {expenses.map((expense) => {
-          return (
-            <li>
-              {expense.source}: {expense.amount} EUR, on {expense.date}{" "}
-            </li>
-          );
-        })}
-      </ul>
+  {expenses.map((expense) => (
+    <li key={expense.id}>
+      {expense.source}: {expense.amount} EUR, on {expense.date}{" "}
+      <button onClick={() => handleDelete(parseInt(expense.id))}> Delete </button>
+    </li>
+  ))}
+</ul>
     </div>
   );
 };

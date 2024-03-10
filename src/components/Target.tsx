@@ -44,24 +44,24 @@ export const Target = (props: { savingAmount: number }) => {
             onChange={(e) => setTargetInput(e.target.value)}
             required
           ></input>
-          <button> Add Income </button>
+          <button> Add </button>
         </div>
       </form>
-      <p> Current Saving:  ${totalSaving} </p>
-      <p> Target: {props.savingAmount}</p>
-     
+      <p> Current Saving: {props.savingAmount} </p>
+      <p> Target: ${totalSaving}</p>
+
       <p>
         {" "}
         <progress max={5000} value={1000}>
           {" "}
         </progress>
       </p>
-      <p> Percentage of Target: {percentage}% </p>
+      <p> Percentage: {percentage}% </p>
       <ul>
         {sources.map((source, index) => (
           <li key={index}>
             {source.type === "income" ? "Income" : "Expense"}: ${source.amount}
-           {/* //delete button to remove the set target */}
+            {/* //delete button to remove the set target */}
             <button onClick={() => handleDelete(index)}> Delete</button>
           </li>
         ))}

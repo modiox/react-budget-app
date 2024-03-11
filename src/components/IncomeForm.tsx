@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react"; //im
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
-type incomeType = {
+type IncomeType= {
   id: string,
   source: string;
   amount: number;
@@ -16,7 +16,7 @@ export const IncomeForm = (props: {
   const [incomeSource, setIncomeSource] = useState("");
   const [incomeAmount, setIncomeAmount] = useState(0);
   const [incomeDate, setDate] = useState("");
-  const [incomes, setIncomes] = useState<incomeType[]>([]); // the array where to push my items
+  const [incomes, setIncomes] = useState<IncomeType []>([]); // the array where to push my items
 
   const totalAmount = incomes.reduce(
     (total, currentValue) => total + currentValue.amount,
@@ -27,7 +27,6 @@ export const IncomeForm = (props: {
     props.onGetTotalIncomeAmount(totalAmount);
   }, [incomeAmount, totalAmount, props]);
 
-  props.onGetTotalIncomeAmount(totalAmount);
 
   const handleIncomeSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -94,7 +93,7 @@ export const IncomeForm = (props: {
           ></input>
         </div>
         <div className="form-field">
-          <label htmlFor="amount"> Date of Income </label>
+          <label htmlFor="date"> Date of Income </label>
           <input
             type="date"
             name="date"

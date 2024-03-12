@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -26,30 +25,31 @@ function App() {
   };
 
   return (
-    // <BrowserRouter>
+    <div>
+      <div className="budget-title">
+        {" "}
+        <h1> Moe's Budget App </h1>{" "}
+      </div>
       <div className="container">
-        <h1> Moe's Budget App </h1> 
-      <div className="style">
-        <IncomeForm onGetTotalIncomeAmount={getTotalIncomeAmount} />
+        <div className="style">
+          <IncomeForm onGetTotalIncomeAmount={getTotalIncomeAmount} />
+        </div>
+        <div className="style">
+          <Expense onGetTotalExpenseAmount={getTotalExpenseAmount} />
+        </div>
+        <div className="style">
+          <Target savingAmount={savingAmount} />{" "}
+        </div>
+        <div className="style">
+          <Transfer
+            onGetSavingAmount={getSavingAmount}
+            totalIncomeAmout={totalIncomeAmout}
+            totalExpenseAmount={totalExpenseAmount}
+          />
+        </div>
+        <ToastContainer />
       </div>
-      <div className="style">
-        {" "}
-        <Expense onGetTotalExpenseAmount={getTotalExpenseAmount} />
-      </div>
-      <div className="style">
-        <Target savingAmount={savingAmount} />{" "}
-      </div>
-      <div className="style">
-        {" "}
-        <Transfer
-          onGetSavingAmount={getSavingAmount}
-          totalIncomeAmout={totalIncomeAmout}
-          totalExpenseAmount={totalExpenseAmount}
-        />
-      </div>
-      <ToastContainer />
     </div>
-
   );
 }
 

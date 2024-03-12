@@ -32,38 +32,34 @@ form {
   border-radius: 5px;
   box-shadow: 5px 5px 10px #000;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: row;
 }
-.container {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(300px, 1fr)
-  ); /* Adjust the width of each item as needed */
-  gap: 20px; /* Adjust the gap between items */
-  /* display: grid;
-  grid-template-columns: (2, auto);
-  text-align: center;
-  color: var(--dark); */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px; /* Adjust padding for smaller screens */
+  }
 }
-.container h1 {
+
+.budget-title {
+  display: block;
+  width: 100%;
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-family: "Quicksand", sans-serif;
   color: #0f2c59;
-  background-color: #8b7e74;
-  padding-bottom: 50px;
   padding: 2rem 0;
 }
 
 .style {
   padding: 0.4rem 1rem;
-  width: 300px;
+  width: 100%; /* Adjust width for smaller screens */
+  margin: 0 auto; /* Center the components */
   border: 1px solid #ddd;
-  font-family: inherit;
-  font-size: 1rem;
-  margin-left: 0.5rem;
   border-radius: 3px;
 }
+
 .container .style {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -79,6 +75,7 @@ form {
   transition: all 0.3s ease-in;
   font-family: "Quicksand", sans-serif;
 }
+
 button {
   align-items: center;
   appearance: none;
@@ -121,4 +118,93 @@ button:hover {
 
 button:focus:not(:active) {
   box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 0.125em;
+}
+p {
+  text-align: center;
+}
+/* navbar styling  */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  margin: 0 10px;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #555;
+  border-radius: 5px;
+}
+
+/* Home component styling */
+
+.home-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.home-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.home-text {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* About component styling  */
+
+.about-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.about-text {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Contact Component styling  */
+
+.contact-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.contact-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.contact-text {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.contact-info {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-info li {
+  font-size: 16px;
+  margin-bottom: 10px;
 }

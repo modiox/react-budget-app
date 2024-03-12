@@ -1,13 +1,21 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, BrowserRouter, Link, NavLink } from 'react-router-dom';
+import React from "react";
+import App from "../App";
+import {
+  BrowserRouter as Router,
+  Route,
+  BrowserRouter,
+  Link,
+  NavLink,
+} from "react-router-dom";
+
 
 const Home = () => {
   return (
-    <div>
-      <h2>Welcome to Your Budget App</h2>
-      <p>This is the home page of your budget app.</p>
-      <p>You can manage your expenses and income using the navigation links above.</p>
-      <p>Get started by clicking on one of the links.</p>
+    <div className="home-container">
+      <h2 className="home-title">Welcome to Your Budget App</h2>
+      <p className="home-text" >This is the home page of your budget app.
+        You can manage your expenses and income using the navigation links
+        above.  Get started by clicking on one of the links.</p>
     </div>
   );
 };

@@ -5,6 +5,8 @@ import './index.css';
 import Home from './pages/Home';
 import Navbar from './pages/Navbar';
 import App from './App';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -12,8 +14,10 @@ ReactDOM.render(
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/budget-app" element={<App />}> </Route> 
+        <Route path="/about" element={<About />}> </Route> 
+        <Route path="/contact" element={<Contact />}> </Route> 
       </Routes>
-      <App /> {/* Render App component outside of Routes */}
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

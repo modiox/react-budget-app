@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useMemo } from "react";
 
 type Source = {
   type: string;
@@ -19,17 +19,22 @@ export const Target = (props: { savingAmount: number }) => {
       setTargetInput("");
     }
   };
-  // Calculate total saving
-  const totalSaving = sources.reduce((acc, source) => acc + source.amount, 0);
 
-  // Calculate percentage
-  const percentage = ((totalSaving / props.savingAmount) * 100).toFixed(2);
+  // Calculate total saving
+  const totalSaving = useMemo(() => {
+    return sources.reduce((acc, source) => acc + source.amount, 0);
+  }, [sources]);
 
   const handleDelete = (index: number) => {
     const newSources = [...sources];
     newSources.splice(index, 1);
     setSources(newSources);
   };
+
+  // Calculate percentage
+  const percentage = useMemo(() => {
+    return ((totalSaving / props.savingAmount) * 100).toFixed(2);
+  }, [totalSaving, props.savingAmount]);
 
   return (
     <div>
@@ -52,7 +57,7 @@ export const Target = (props: { savingAmount: number }) => {
 
       <p>
         {" "}
-        <progress max={5000} value={1000}>
+        <progress max={props.savingAmount} value={totalSaving}>
           {" "}
         </progress>
       </p>

@@ -1,13 +1,21 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react"; //importing the use state to handle the component's data
+import { useForm } from "react-hook-form";
+import { z, ZodError } from "zod";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
-type IncomeType= {
+type IncomeType = {
   id: string,
   source: string;
   amount: number;
   date: string;
 };
+const schema = z.object({
+  source: z.string().min(1),
+  amount: z.number().min(0),
+  date: z.string().min(1),
+});
+type FormData = z.infer<typeof schema>;
 
 export const IncomeForm = (props: {
   onGetTotalIncomeAmount: (amount: number) => void;
@@ -16,7 +24,7 @@ export const IncomeForm = (props: {
   const [incomeSource, setIncomeSource] = useState("");
   const [incomeAmount, setIncomeAmount] = useState(0);
   const [incomeDate, setDate] = useState("");
-  const [incomes, setIncomes] = useState<IncomeType []>([]); // the array where to push my items
+  const [incomes, setIncomes] = useState<IncomeType[]>([]); // the array where to push my items
 
   const totalAmount = incomes.reduce(
     (total, currentValue) => total + currentValue.amount,
@@ -27,9 +35,19 @@ export const IncomeForm = (props: {
     props.onGetTotalIncomeAmount(totalAmount);
   }, [incomeAmount, totalAmount, props]);
 
+  props.onGetTotalIncomeAmount(totalAmount);
+
+
 
   const handleIncomeSubmit = (e: FormEvent) => {
     e.preventDefault();
+  // Validate form inputs
+  const parsedAmount = Number(incomeAmount);
+  if (!incomeSource || isNaN(parsedAmount) || parsedAmount <= 0 || !incomeDate) {
+  toast.error("Please fill in all fields with valid data.");
+  return;
+}
+
     if (incomeSource && incomeAmount && incomeDate) {
       const income = {
         id: uuidv4(),
@@ -39,16 +57,15 @@ export const IncomeForm = (props: {
       };
       console.log(income);
       setIncomes((prevIcomes) => {
-        toast.success("New Expense Added");
         return [...prevIcomes, income];
-       
       }); //use spread operator to spread the array items
-
+       toast.success("New Expense Added");
       // Reset form fields after submission
       setIncomeSource("");
       setIncomeAmount(0);
       setDate("");
     }
+  
   };
 
   const handleSourceChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +82,8 @@ export const IncomeForm = (props: {
   const handleDelete = (id: string) => {
     const updatedIncomes = incomes.filter((income) => income.id !== id);
     setIncomes(updatedIncomes);
-  };
+    toast.error("Expense Deleted");
+  }; 
 
   return (
     <div>

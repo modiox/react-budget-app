@@ -1,24 +1,29 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useCallback, useState } from "react";
+
 
 type TransferForSavingProps = {
   onGetSavingAmount: (amount: number) => void;
   totalIncomeAmout: number;
   totalExpenseAmount: number;
+  
 };
 
 export const Transfer = (props: TransferForSavingProps) => {
   const [amount, setAmount] = useState(0);
 
-  const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleAmountChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setAmount(Number(event.target.value));
-  };
+    setError("");
+  }, []);
 
-  const handleSumbit = (e: FormEvent) => {
+  const handleSumbit = useCallback((e: FormEvent) => {
     e.preventDefault();
-    console.log();
+    if (amount <= 0) {
+      setError("Please enter a valid positive number");
+      return;
+    }
     props.onGetSavingAmount(amount);
-  };
- 
+  }, [amount, props]);
 
   return (
     <div>
@@ -47,3 +52,7 @@ export default Transfer;
 function onGetSavingAmount(amount: number) {
   throw new Error("Function not implemented.");
 }
+function setError(arg0: string) {
+  throw new Error("Function not implemented.");
+}
+

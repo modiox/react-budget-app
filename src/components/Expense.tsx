@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { v4 as uuidv4 } from "uuid";
 
+
 type expenseType = {
   id: string,
   source: string;
@@ -67,6 +68,12 @@ export const Expense = (props: totalExpenseAmountProps) => {
       toast.success("New Expense Added");
       props.onGetTotalExpenseAmount(totalAmount);
     } else toast.error("Date is missing");
+
+    
+    if (!source || !amount || !date) {
+      toast.error("Please fill in all fields");
+      return;
+    }
 
     // Reset form fields after submission
     setSource("");

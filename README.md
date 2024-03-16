@@ -25,14 +25,12 @@ In addition to the basic requirements, the application enhances its functionalit
 
 If you have a higher skill level and finish the previous requirements before the deadline, you can tackle the following bonus tasks:
 
-- Validate the input income, expense, target of income, and saving account. They should be positive numbers. In case the user enters a negative number, display an error message. Use React Hook Form and Zod to apply validation.
+- Validate the input income, expense, target of income, and saving account. Th should be positive numbers. In case the user enters a negative number, display an error message. Use React Hook Form and Zod to apply validation.
 - Peer Review:
 - Review the code and implementation of 2 assignments from other participants.
 - Provide constructive feedback and suggestions for improvement.
 
-
 `Please note that the bonus requirements and reviews are optional and can be completed if you have additional time and advanced skills.`
-
 
 # React Advanced
 

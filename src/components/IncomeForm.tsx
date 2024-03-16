@@ -1,6 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react"; //importing the use state to handle the component's data
-import { useForm } from "react-hook-form";
-import { z, ZodError } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,16 +9,20 @@ type IncomeType = {
   amount: number;
   date: string;
 };
-const schema = z.object({
-  source: z.string().min(1),
-  amount: z.number().min(0),
-  date: z.string().min(1),
-});
-type FormData = z.infer<typeof schema>;
+
+
 
 export const IncomeForm = (props: {
   onGetTotalIncomeAmount: (amount: number) => void;
 }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IncomeType>();
+  const notify = () => toast("Income added successfully!");
+  
   //use state for each input, inComeSource is set
   const [incomeSource, setIncomeSource] = useState("");
   const [incomeAmount, setIncomeAmount] = useState(0);
@@ -35,50 +38,41 @@ export const IncomeForm = (props: {
     props.onGetTotalIncomeAmount(totalAmount);
   }, [incomeAmount, totalAmount, props]);
 
-  props.onGetTotalIncomeAmount(totalAmount);
 
 
-
-  const handleIncomeSubmit = (e: FormEvent) => {
-    e.preventDefault();
-  // Validate form inputs
-  const parsedAmount = Number(incomeAmount);
-  if (!incomeSource || isNaN(parsedAmount) || parsedAmount <= 0 || !incomeDate) {
-  toast.error("Please fill in all fields with valid data.");
-  return;
-}
-
-    if (incomeSource && incomeAmount && incomeDate) {
+  const handleIncomeSubmit: SubmitHandler<IncomeType> = (data) =>  {
+    if (data.source && data.amount && data.date) {
       const income = {
         id: uuidv4(),
-        source: incomeSource,
-        amount: incomeAmount,
-        date: incomeDate,
+        source: data.source,
+        amount: data.amount,
+        date: data.date,
       };
       console.log(income);
-      setIncomes((prevIcomes) => {
-        return [...prevIcomes, income];
-      }); //use spread operator to spread the array items
-       toast.success("New Expense Added");
+      setIncomes((prevIncomes) => [...prevIncomes, income]);
+      toast.success("New Expense Added");
       // Reset form fields after submission
       setIncomeSource("");
       setIncomeAmount(0);
       setDate("");
+      notify(); // Move notify here
+      reset();
+    } else {
+      toast.error("Please fill in all fields.");
     }
-  
   };
 
-  const handleSourceChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setIncomeSource(value); //updates the status of the value
-  };
-  const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setIncomeAmount(Number(event.target.value)); //converts to number
-  };
+  // const handleSourceChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   const { value } = event.target;
+  //   setIncomeSource(value); //updates the status of the value
+  // };
+  // const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setIncomeAmount(Number(event.target.value)); //converts to number
+  // };
 
-  const handleDate = (event: ChangeEvent<HTMLInputElement>) => {
-    setDate(event.target.value);
-  };
+  // const handleDate = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setDate(event.target.value);
+  // };
   const handleDelete = (id: string) => {
     const updatedIncomes = incomes.filter((income) => income.id !== id);
     setIncomes(updatedIncomes);
@@ -87,39 +81,38 @@ export const IncomeForm = (props: {
 
   return (
     <div>
-      <form onSubmit={handleIncomeSubmit}>
+      <form onSubmit={handleSubmit(handleIncomeSubmit)}>
         <div className="form-field">
           <label htmlFor="source"> Income source </label>
           <input
-            type="text"
-            name="source"
-            id="source"
-            value={incomeSource}
-            required
-            onChange={handleSourceChange}
-          ></input>
+          type="text"
+        placeholder="i.e salary.."
+        required 
+        id="income-source"
+        {...register("source", { required: "Enter income source" })}
+        />
+        {errors.source && <span>{errors.source.message}</span>}
+
         </div>
         <div className="form-field">
           <label htmlFor="amount"> Amount of Income </label>
           <input
             type="number"
-            name="amount"
-            id="amount"
-            value={incomeAmount}
-            onChange={handleAmountChange}
-            required
-          ></input>
+            id="income-amount"
+            {...register("amount", {
+              valueAsNumber: true,
+              required: "Enter income amount",
+              min: { value: 0, message: "Enter valid amount" },
+            })}
+          > {errors.amount && <span>{errors.amount.message}</span>}</input>
         </div>
         <div className="form-field">
           <label htmlFor="date"> Date of Income </label>
           <input
-            type="date"
-            name="date"
-            id="date"
-            value={incomeDate}
-            onChange={handleDate}
-            required
-          ></input>
+           type="date"
+           {...register("date", { required: "Enter income date" })}
+           id="income-date"
+          > {errors.date && <span>{errors.date.message}</span>}</input>
         </div>
         <button> Add Income </button>
       </form>
@@ -142,3 +135,4 @@ export const IncomeForm = (props: {
 };
 
 export default IncomeForm;
+

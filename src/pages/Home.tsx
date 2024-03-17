@@ -1,12 +1,3 @@
-import React from "react";
-import App from "../App";
-import {
-  BrowserRouter as Router,
-  Route,
-  BrowserRouter,
-  Link,
-  NavLink,
-} from "react-router-dom";
 
 
 const Home = () => {

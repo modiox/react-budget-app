@@ -11,7 +11,6 @@ type IncomeType = {
 };
 
 
-
 export const IncomeForm = (props: {
   onGetTotalIncomeAmount: (amount: number) => void;
 }) => {
@@ -24,9 +23,9 @@ export const IncomeForm = (props: {
   const notify = () => toast("Income added successfully!");
   
   //use state for each input, inComeSource is set
-  const [incomeSource, setIncomeSource] = useState("");
-  const [incomeAmount, setIncomeAmount] = useState(0);
-  const [incomeDate, setDate] = useState("");
+  // const [incomeSource, setIncomeSource] = useState("");
+  // const [incomeAmount, setIncomeAmount] = useState(0);
+  // const [incomeDate, setDate] = useState("");
   const [incomes, setIncomes] = useState<IncomeType[]>([]); // the array where to push my items
 
   const totalAmount = incomes.reduce(
@@ -36,7 +35,7 @@ export const IncomeForm = (props: {
   // useEffect
   useEffect(() => {
     props.onGetTotalIncomeAmount(totalAmount);
-  }, [incomeAmount, totalAmount, props]);
+  }, [incomes, totalAmount, props]);
 
 
 
@@ -52,9 +51,9 @@ export const IncomeForm = (props: {
       setIncomes((prevIncomes) => [...prevIncomes, income]);
       toast.success("New Expense Added");
       // Reset form fields after submission
-      setIncomeSource("");
-      setIncomeAmount(0);
-      setDate("");
+      // setIncomeSource("");
+      // setIncomeAmount(0);
+      // setDate("");
       notify(); // Move notify here
       reset();
     } else {

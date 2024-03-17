@@ -13,7 +13,7 @@ ReactDOM.render(
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home/>} />
         <Route path="/budget-app" element={<App/>}> </Route> 
         <Route path="/about" element={<About />}> </Route> 
         <Route path="/contact" element={<Contact />}> </Route> 

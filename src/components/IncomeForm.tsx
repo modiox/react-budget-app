@@ -80,7 +80,6 @@ export const IncomeForm = (props: {
               min: { value: 0, message: "Enter valid amount" },
             })}
           >
-            {" "}
             {errors.amount && <span>{errors.amount.message}</span>}
           </input>
         </div>
@@ -91,7 +90,7 @@ export const IncomeForm = (props: {
             {...register("date", { required: "Enter income date" })}
             id="income-date"
           >
-            {" "}
+
             {errors.date && <span>{errors.date.message}</span>}
           </input>
         </div>

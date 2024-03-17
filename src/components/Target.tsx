@@ -1,4 +1,6 @@
 import React, { FormEvent, useState, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 type Source = {
   type: string;
@@ -6,17 +8,25 @@ type Source = {
 };
 
 export const Target = (props: { savingAmount: number }) => {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<Source>();
+  const notify = () => toast("Income added successfully!");
   // State for storing income and expense sources
   const [sources, setSources] = useState<Source[]>([]);
   const [targetInput, setTargetInput] = useState("");
 
   // Function to handle adding income
-  const handleAddIncome = (event: FormEvent) => {
-    event.preventDefault();
+  const handleAddIncome = (data: Source) => {
     const targetValue = parseFloat(targetInput);
     if (!isNaN(targetValue)) {
       setSources([...sources, { type: "income", amount: targetValue }]);
-      setTargetInput("");
+      notify();
+      reset();
     }
   };
 
@@ -33,22 +43,23 @@ export const Target = (props: { savingAmount: number }) => {
 
   // Calculate percentage
   const percentage = useMemo(() => {
+    if (props.savingAmount === 0) {
+      return 0; 
+    }
     return ((totalSaving / props.savingAmount) * 100).toFixed(2);
   }, [totalSaving, props.savingAmount]);
 
   return (
     <div>
-      <form onSubmit={handleAddIncome}>
+      <form onSubmit={handleSubmit(handleAddIncome)}>
         <div className="form-field">
           <label htmlFor="source"> Set Target </label>
           <input
-            type="text"
-            name="source"
+            type="number" 
             id="source"
-            value={targetInput}
-            onChange={(e) => setTargetInput(e.target.value)}
-            required
+            {...register("amount", { required: true })}
           ></input>
+          {errors.amount && <span>This field is required</span>} 
           <button> Add </button>
         </div>
       </form>
@@ -56,17 +67,13 @@ export const Target = (props: { savingAmount: number }) => {
       <p> Target: ${totalSaving}</p>
 
       <p>
-        {" "}
-        <progress max={props.savingAmount} value={totalSaving}>
-          {" "}
-        </progress>
-      </p>
-      <p> Percentage: {percentage}% </p>
+  Progress: {percentage}%
+  <progress max={100} value={percentage}></progress>
+</p>
       <ul>
         {sources.map((source, index) => (
           <li key={index}>
             {source.type === "income" ? "Income" : "Expense"}: ${source.amount}
-            {/* //delete button to remove the set target */}
             <button onClick={() => handleDelete(index)}> Delete</button>
           </li>
         ))}

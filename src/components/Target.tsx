@@ -63,8 +63,8 @@ export const Target = (props: { savingAmount: number }) => {
           <button> Add </button>
         </div>
       </form>
-      <p> Current Saving: {props.savingAmount} </p>
-      <p> Target: ${totalSaving}</p>
+      <p> Current Saving: {`props.savingAmount`} </p>
+      <p> Target: ${`totalSaving`}</p>
 
       <p>
   Progress: {percentage}%

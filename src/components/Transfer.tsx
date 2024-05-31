@@ -49,9 +49,6 @@ export const Transfer = (props: TransferForSavingProps) => {
 };
 
 export default Transfer;
-function onGetSavingAmount(amount: number) {
-  throw new Error("Function not implemented.");
-}
 function setError(arg0: string) {
   throw new Error("Function not implemented.");
 }
